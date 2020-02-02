@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Gregslist.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Owner.UserName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner.UserName)
+                </td>
+                <td>
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                        
+                        @if (item.Owner.UserName == User.Identity.Name)
+                        {
+                                <a asp-action="Edit" asp-route-id="@item.ID">| Edit |</a>
+                                <form class="form-inline" asp-action="Delete" method="post" asp-route-id="@item.ID">
+                                    <button class="btn btn-link text-danger">Delete</button>
+                                </form>
+                        }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
